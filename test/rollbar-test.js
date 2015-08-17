@@ -192,5 +192,23 @@ describe("Rollbar API", function () {
 				assert.deepEqual(res.body, tokenList);
 			});
 		});
+
+		it("updates access token rate limits", function () {
+			nock(BASE_URL)
+				.patch("/project/1234/access_token/abc123")
+				.query(true)
+				.reply(200, {
+					err: 0
+				});
+
+			api.updateAccessTokenRateLimit(1234, "abc123", {
+				rate_limit_window_count: 100
+			}, function (err, res) {
+				assert.isNull(err);
+				assert.strictEqual(res.statusCode, 200);
+				assert.isObject(res);
+				assert.isUndefined(res.body);
+			});
+		});
 	});
 });

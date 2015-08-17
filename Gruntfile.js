@@ -28,9 +28,18 @@ module.exports = function (grunt) {
 			all: {
 				src: ["test/*.js"]
 			}
+		},
+		jsdoc: {
+			dist: {
+				src: ["lib"],
+				options: {
+					destination: "docs"
+				}
+			}
 		}
 	});
 
+	grunt.registerTask("docs", ["jsdoc"]);
 	grunt.registerTask("lint", ["jshint"]);
 	grunt.registerTask("work", ["jshint", "watch"]);
 	grunt.registerTask("default", ["lint", "simplemocha"]);
