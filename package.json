@@ -1,6 +1,6 @@
 {
   "name": "rollbar-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A node.js wrapper for the Rollbar API",
   "repository": "https://github.com/cwhenderson20/rollbar-api",
   "main": "index.js",
