@@ -1,6 +1,13 @@
 language: node_js
 before_install: npm install -g grunt-cli
 node_js:
-  - "0.12"
-  - "0.10"
-  - "iojs"
+- '0.12'
+- '0.10'
+- iojs
+deploy:
+  provider: npm
+  email: "cwhenderson20@gmail.com"
+  api_key:
+    secure: qkrJas09wIxURUFy2gSiEqB4UB9hBilWAtZODcgsXlpuN2HDtfCJfigoedW0qywuo34i/RcAxE03LdhPyLpge9ob4daqCbmi2dTpGgaCIT5Tbd2CK3+NHeBx2uElglwrBX8AY2ryzJFtagr+nt5ZgkpXBYcRq/uL/t3DUNBYmLxDireJ2aInY2lDzB33yGfz22QnFeVfnIcvOZ0/UOj7D9tWvK/aFZfSux9vXgIYjb8Bc9wQV9izImQOYYst+uv6sCTz63zoTDarTanWswbofL60U8iE5gRS4RnU9tjNbX9UHUnPWpGOTDsJE5I1qeWXgzer6Q8Zc5TYG1qHV3y2zebMVyrouhIv/hvpYx4EPRLFm1aQp4AcxWoRNcAgflelE3JCFMTa2ZDOnVYlXS2W1tmaMrrXigzQpPPMNuYI0Pj07eXB9y9tU+e6rq31xdFCjdY4f7A8Y5UlajDw0eRng0vcDaypXWiY6/8aZ22P4wxbnbNE6+kc2k+G52tVRnYwevsodHEzrpMPuTf1Mqh4V8JoBxQyweZqgKBlrSagUNlV1txuo6sc4BcYKcn4dByXL902xH+HK04yCPzMbcJxI6Q5fJ3Yh4TOaFIqoOjAxMSehXRb5jrMd3LyhB5nhtF/x8ATW5v5OT76rexndXOuxCexw4/iJ2jHI8KEyodtMoY=
+  on:
+    tags: true
