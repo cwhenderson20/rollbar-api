@@ -4,7 +4,7 @@ var assert = require("chai").assert;
 var Rollbar = require("../lib/rollbar");
 var ApiError = require("../lib/api-error");
 
-describe("Rollbar API", function () {
+describe("Rollbar", function () {
 	describe("Instantiation", function () {
 		it("exists", function () {
 			assert.isFunction(Rollbar);
@@ -33,7 +33,7 @@ describe("Rollbar API", function () {
 		});
 	});
 
-	describe("API functions", function () {
+	describe("API", function () {
 		var api;
 		var BASE_URL = "https://api.rollbar.com/api/1";
 		var EXAMPLE_PROJ = {
@@ -73,63 +73,6 @@ describe("Rollbar API", function () {
 			api = new Rollbar({
 				read: "read123",
 				write: "write123"
-			});
-		});
-
-		describe("Provisioning function", function () {
-			it("creates teams", function () {
-				var REPLY = {
-					id: 1234,
-					account_id: "abc1234",
-					name: "Example Team",
-					access_level: "standard"
-				};
-
-				nock(BASE_URL)
-					.post("/teams", {
-						name: "Example Team",
-						access_level: "standard"
-					})
-					.query({
-						access_token: "write123"
-					})
-					.reply(200, {
-						err: 0,
-						result: REPLY
-					});
-
-				api.createTeam({
-					name: "Example Team",
-					access_level: "standard"
-				}, function (err, res) {
-					assert.isNull(err);
-					assert.strictEqual(res.statusCode, 200);
-					assert.deepEqual(res.body, REPLY);
-				});
-			});
-
-			it("adds a project to a team", function () {
-				nock(BASE_URL)
-					.put("/team/1234/project/1234")
-					.query({
-						access_token: "write123"
-					})
-					.reply(200, {
-						err: 0,
-						result: {
-							team_id: 1234,
-							project_id: 1234
-						}
-					});
-
-				api.addProjectToTeam(1234, 1234, function (err, res) {
-					assert.isNull(err);
-					assert.strictEqual(res.statusCode, 200);
-					assert.deepEqual(res.body, {
-						team_id: 1234,
-						project_id: 1234
-					});
-				});
 			});
 		});
 
@@ -383,6 +326,388 @@ describe("Rollbar API", function () {
 					assert.isNull(err);
 					assert.strictEqual(res.statusCode, 200);
 					assert.isUndefined(res.body);
+				});
+			});
+		});
+
+		describe("Team functions", function () {
+			it("gets a specific team", function () {
+				nock(BASE_URL)
+					.get("/team/1234")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							id: 1234,
+							account_id: 1234,
+							name: "Example Team",
+							access_level: "standard"
+						}
+					});
+
+				api.getTeam(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.strictEqual(res.body.id, 1234);
+				});
+			});
+
+			it("lists teams", function () {
+				nock(BASE_URL)
+					.get("/teams")
+					.query({
+						access_token: "read123",
+						page: 2
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							team1: "string"
+						}
+					});
+
+				api.listTeams({
+					page: 2
+				}, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						team1: "string"
+					});
+				});
+
+				nock(BASE_URL)
+					.get("/teams")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							team2: "string"
+						}
+					});
+
+				api.listTeams(function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						team2: "string"
+					});
+				});
+			});
+
+			it("creates a team", function () {
+				var REPLY = {
+					id: 1234,
+					account_id: "abc1234",
+					name: "Example Team",
+					access_level: "standard"
+				};
+
+				nock(BASE_URL)
+					.post("/teams", {
+						name: "Example Team",
+						access_level: "standard"
+					})
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0,
+						result: REPLY
+					});
+
+				api.createTeam({
+					name: "Example Team",
+					access_level: "standard"
+				}, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, REPLY);
+				});
+			});
+
+			it("deletes a team", function () {
+				nock(BASE_URL)
+					.delete("/team/1234")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0
+					});
+
+				api.deleteTeam(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.isUndefined(res.body);
+				});
+			});
+
+			it("checks if a project is in a team", function () {
+				nock(BASE_URL)
+					.get("/team/1234/project/1234")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							team_id: 1234,
+							project_id: 1234
+						}
+					});
+
+				api.isProjectInTeam(1234, 1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						team_id: 1234,
+						project_id: 1234
+					});
+				});
+
+				nock(BASE_URL)
+					.get("/team/1234/project/5678")
+					.query({
+						access_token: "read123"
+					})
+					.reply(404, {
+						err: 1,
+						message: "Project is not in this team."
+					});
+
+				api.isProjectInTeam(1234, 5678, function (err, res) {
+					assert.isUndefined(res);
+					assert.strictEqual(err.statusCode, 404);
+					assert.strictEqual(err.message, "Project is not in this team.");
+				});
+			});
+
+			it("adds a project to a team", function () {
+				nock(BASE_URL)
+					.put("/team/1234/project/1234")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							team_id: 1234,
+							project_id: 1234
+						}
+					});
+
+				api.addProjectToTeam(1234, 1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						team_id: 1234,
+						project_id: 1234
+					});
+				});
+			});
+
+			it("removes a project from a team", function () {
+				nock(BASE_URL)
+					.delete("/team/1234/project/1234")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0
+					});
+
+				api.removeProjectFromTeam(1234, 1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.isUndefined(res.body);
+				});
+
+				nock(BASE_URL)
+					.delete("/team/1234/project/5678")
+					.query({
+						access_token: "write123"
+					})
+					.reply(422, {
+						err: 1,
+						message: "Project already not associated with this team"
+					});
+
+				api.removeProjectFromTeam(1234, 5678, function (err, res) {
+					assert.isUndefined(res);
+					assert.strictEqual(err.statusCode, 422);
+					assert.deepEqual(err.message, "Project already not associated with this team");
+				});
+			});
+
+			it("checks team membership", function () {
+				nock(BASE_URL)
+					.get("/team/1234/user/1234")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							team_id: 1234,
+							user_id: 1234
+						}
+					});
+
+				api.checkTeamMembership(1234, 1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						team_id: 1234,
+						user_id: 1234
+					});
+				});
+
+				nock(BASE_URL)
+					.get("/team/1234/user/5678")
+					.query({
+						access_token: "read123"
+					})
+					.reply(404, {
+						err: 1,
+						message: "User is not on this Team."
+					});
+
+				api.checkTeamMembership(1234, 5678, function (err, res) {
+					assert.isUndefined(res);
+					assert.strictEqual(err.statusCode, 404);
+					assert.strictEqual(err.message, "User is not on this Team.");
+				});
+			});
+
+			it("lists team members", function () {
+				nock(BASE_URL)
+					.get("/team/1234/users")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: [{
+							team_id: 1234,
+							user_id: 1234
+						}]
+					});
+
+				api.listTeamMembers(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, [{
+						team_id: 1234,
+						user_id: 1234
+					}]);
+				});
+
+				nock(BASE_URL)
+					.get("/team/1234/users")
+					.query({
+						access_token: "read123",
+						page: 2
+					})
+					.reply(200, {
+						err: 0,
+						result: [{
+							team_id: 1234,
+							user_id: 1234
+						}]
+					});
+
+				api.listTeamMembers(1234, {
+					page: 2
+				}, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, [{
+						team_id: 1234,
+						user_id: 1234
+					}]);
+				});
+			});
+
+			it("removes a user from a team", function () {
+				nock(BASE_URL)
+					.delete("/team/1234/user/1234")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0
+					});
+
+				api.removeUserFromTeam(1234, 1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.isUndefined(res.body);
+				});
+
+				nock(BASE_URL)
+					.delete("/team/1234/user/5678")
+					.query({
+						access_token: "write123"
+					})
+					.reply(422, {
+						err: 1,
+						message: "User not found for this team"
+					});
+
+				api.removeUserFromTeam(1234, 5678, function (err, res) {
+					assert.isUndefined(res);
+					assert.strictEqual(err.statusCode, 422);
+					assert.strictEqual(err.message, "User not found for this team");
+				});
+			});
+		});
+
+		describe("User functions", function () {
+
+			it("gets information about a user", function () {
+				nock(BASE_URL)
+					.get("/user/1234")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							id: 1234,
+							username: "exampleuser",
+							email: "example@fake.com"
+						}
+					});
+
+				api.getUser(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						id: 1234,
+						username: "exampleuser",
+						email: "example@fake.com"
+					});
+				});
+
+				nock(BASE_URL)
+					.get("/user/5678")
+					.query({
+						access_token: "read123"
+					})
+					.reply(403, {
+						err: 1,
+						message: "User not found in this account."
+					});
+
+				api.getUser(5678, function (err, res) {
+					assert.isUndefined(res);
+					assert.strictEqual(err.statusCode, 403);
+					assert.strictEqual(err.message, "User not found in this account.");
 				});
 			});
 		});
