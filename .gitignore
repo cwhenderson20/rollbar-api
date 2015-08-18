@@ -1,2 +1,4 @@
+.jscsrc
+.jshintrc
 node_modules
 docs

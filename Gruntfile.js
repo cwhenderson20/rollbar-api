@@ -11,6 +11,9 @@ module.exports = function (grunt) {
 			target: ["lib", "test", "*.js"]
 		},
 		watch: {
+			options: {
+				atBegin: true
+			},
 			all: {
 				files: [
 					"lib/*.js",
@@ -41,6 +44,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask("docs", ["jsdoc"]);
 	grunt.registerTask("lint", ["jshint"]);
-	grunt.registerTask("work", ["jshint", "watch"]);
-	grunt.registerTask("default", ["lint", "simplemocha"]);
+	grunt.registerTask("work", ["watch"]);
+	grunt.registerTask("default", ["lint", "simplemocha", "docs"]);
 };

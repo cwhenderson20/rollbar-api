@@ -71,143 +71,319 @@ describe("Rollbar API", function () {
 
 		beforeEach(function () {
 			api = new Rollbar({
-				read: "abc123",
-				write: "abc123"
+				read: "read123",
+				write: "write123"
 			});
 		});
 
-		it("lists projects", function () {
-			nock(BASE_URL)
-				.get("/projects")
-				.query(true)
-				.reply(200, {
-					err: 0,
-					result: [EXAMPLE_PROJ]
-				});
+		describe("Provisioning function", function () {
+			it("creates teams", function () {
+				var REPLY = {
+					id: 1234,
+					account_id: "abc1234",
+					name: "Example Team",
+					access_level: "standard"
+				};
 
-			api.listProjects(function (err, res) {
-				assert.isNull(err);
-				assert.strictEqual(res.statusCode, 200);
-				assert.strictEqual(res.body[0].id, 1234);
+				nock(BASE_URL)
+					.post("/teams", {
+						name: "Example Team",
+						access_level: "standard"
+					})
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0,
+						result: REPLY
+					});
+
+				api.createTeam({
+					name: "Example Team",
+					access_level: "standard"
+				}, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, REPLY);
+				});
+			});
+
+			it("adds a team to a project", function () {
+				nock(BASE_URL)
+					.put("/team/1234/project/1234")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							team_id: 1234,
+							project_id: 1234
+						}
+					});
+
+				api.addTeamToProject(1234, 1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						team_id: 1234,
+						project_id: 1234
+					});
+				});
 			});
 		});
 
-		it("gets a specific project", function () {
-			nock(BASE_URL)
-				.get("/project/1234")
-				.query(true)
-				.reply(200, {
-					err: 0,
-					result: EXAMPLE_PROJ
-				});
+		describe("Invite functions", function () {
+			it("gets an invite", function () {
+				nock(BASE_URL)
+					.get("/invite/1234")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							id: 1234,
+							from_user_id: 1234,
+							team_id: 1234,
+							to_email: "example@fake.com",
+							status: "pending"
+						}
+					});
 
-			api.getProject(1234, function (err, res) {
-				assert.isNull(err);
-				assert.strictEqual(res.statusCode, 200);
-				assert.deepEqual(res.body, EXAMPLE_PROJ);
+				api.getInvite(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						id: 1234,
+						from_user_id: 1234,
+						team_id: 1234,
+						to_email: "example@fake.com",
+						status: "pending"
+					});
+				});
+			});
+
+			it("lists invites", function () {
+				var RESPONSE = [{
+					id: 1234,
+					from_user_id: 1234,
+					team_id: 1234,
+					to_email: "example@fake.com",
+					status: "pending"
+				}];
+
+				nock(BASE_URL)
+					.get("/team/1234/invites")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: RESPONSE
+					});
+
+				api.listInvites(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, RESPONSE);
+				});
+			});
+
+			it("cancels an invite", function () {
+				nock(BASE_URL)
+					.delete("/invite/1234")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0
+					});
+
+				api.cancelInvite(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.strictEqual(res.body, undefined);
+				});
+			});
+
+			it("invites a user to a team", function () {
+				nock(BASE_URL)
+					.post("/team/1234/invites", {
+						email: "example@fake.com"
+					})
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0,
+						result: {
+							id: 1234,
+							team_id: 1234,
+							to_email: "example@fake.com",
+							status: "pending"
+						}
+					});
+
+				api.inviteUserToTeam(1234, {
+					email: "example@fake.com"
+				}, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, {
+						id: 1234,
+						team_id: 1234,
+						to_email: "example@fake.com",
+						status: "pending"
+					});
+				});
 			});
 		});
 
-		// ==> Handles errors when project doesn't exist
+		describe("Project functions", function () {
+			it("lists projects", function () {
+				nock(BASE_URL)
+					.get("/projects")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: [EXAMPLE_PROJ]
+					});
 
-		it("deletes a project", function () {
-			nock(BASE_URL)
-				.delete("/project/1234")
-				.query(true)
-				.reply(200, {
-					err: 0
+				api.listProjects(function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.strictEqual(res.body[0].id, 1234);
 				});
-
-			api.deleteProject(1234, function (err, res) {
-				assert.isNull(err);
-				assert.strictEqual(res.statusCode, 200);
-				assert.isUndefined(res.body);
 			});
-		});
 
-		// Doesn't work right now... looking into why
-		// it("responds with an error when the project to delete does not exist", function () {
-		// 	nock(BASE_URL)
-		// 		.delete("/project/1234")
-		// 		.query(true)
-		// 		.reply(422, {
-		// 			err: 1,
-		// 			message: "Invalid project"
-		// 		});
+			it("gets a specific project", function () {
+				nock(BASE_URL)
+					.get("/project/1234")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: EXAMPLE_PROJ
+					});
 
-		// 	api.deleteProject(1234, function (err, res) {
-		// 		assert.isNotNull(err);
-		// 	});
-		// });
-
-		it("creates a project", function () {
-			nock(BASE_URL)
-				.post("/projects", {
-					name: "Sample-Project"
-				})
-				.query(true)
-				.reply(200, {
-					err: 0,
-					result: EXAMPLE_PROJ
+				api.getProject(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, EXAMPLE_PROJ);
 				});
-
-			api.createProject("Sample-Project", function (err, res) {
-				assert.isNull(err);
-				assert.strictEqual(res.statusCode, 200);
-				assert.deepEqual(res.body, EXAMPLE_PROJ);
 			});
-		});
 
-		it("list project access tokens", function () {
-			var tokenList = [{
-				project_id: 1234,
-				access_token: "abc123",
-				name: "write",
-				status: "enabled",
-				scopes: [
-					"write"
-				]
-			}, {
-				project_id: 1234,
-				access_token: "abc123",
-				name: "read",
-				status: "enabled",
-				scopes: [
-					"read"
-				]
-			}];
+			// ==> Handles errors when project doesn't exist
 
-			nock(BASE_URL)
-				.get("/project/1234/access_tokens")
-				.query(true)
-				.reply(200, {
-					err: 0,
-					result: tokenList
+			it("deletes a project", function () {
+				nock(BASE_URL)
+					.delete("/project/1234")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0
+					});
+
+				api.deleteProject(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.isUndefined(res.body);
 				});
-
-			api.listProjectAccessTokens(1234, function (err, res) {
-				assert.isNull(err);
-				assert.strictEqual(res.statusCode, 200);
-				assert.isObject(res);
-				assert.deepEqual(res.body, tokenList);
 			});
-		});
 
-		it("updates access token rate limits", function () {
-			nock(BASE_URL)
-				.patch("/project/1234/access_token/abc123")
-				.query(true)
-				.reply(200, {
-					err: 0
+			// Doesn't work right now... looking into why
+			// it("responds with an error when the project to delete does not exist", function () {
+			// 	nock(BASE_URL)
+			// 		.delete("/project/1234")
+			// 		.query("abc123")
+			// 		.reply(422, {
+			// 			err: 1,
+			// 			message: "Invalid project"
+			// 		});
+
+			// 	api.deleteProject(1234, function (err, res) {
+			// 		assert.isNotNull(err);
+			// 	});
+			// });
+
+			it("creates a project", function () {
+				nock(BASE_URL)
+					.post("/projects", {
+						name: "Sample-Project"
+					})
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0,
+						result: EXAMPLE_PROJ
+					});
+
+				api.createProject("Sample-Project", function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, EXAMPLE_PROJ);
 				});
+			});
 
-			api.updateAccessTokenRateLimit(1234, "abc123", {
-				rate_limit_window_count: 100
-			}, function (err, res) {
-				assert.isNull(err);
-				assert.strictEqual(res.statusCode, 200);
-				assert.isObject(res);
-				assert.isUndefined(res.body);
+			it("list project access tokens", function () {
+				var tokenList = [{
+					project_id: 1234,
+					access_token: "abc123",
+					name: "write",
+					status: "enabled",
+					scopes: [
+						"write"
+					]
+				}, {
+					project_id: 1234,
+					access_token: "abc123",
+					name: "read",
+					status: "enabled",
+					scopes: [
+						"read"
+					]
+				}];
+
+				nock(BASE_URL)
+					.get("/project/1234/access_tokens")
+					.query({
+						access_token: "read123"
+					})
+					.reply(200, {
+						err: 0,
+						result: tokenList
+					});
+
+				api.listProjectAccessTokens(1234, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.deepEqual(res.body, tokenList);
+				});
+			});
+
+			it("updates access token rate limits", function () {
+				nock(BASE_URL)
+					.patch("/project/1234/access_token/abc123")
+					.query({
+						access_token: "write123"
+					})
+					.reply(200, {
+						err: 0
+					});
+
+				api.updateAccessTokenRateLimit(1234, "abc123", {
+					rate_limit_window_count: 100
+				}, function (err, res) {
+					assert.isNull(err);
+					assert.strictEqual(res.statusCode, 200);
+					assert.isUndefined(res.body);
+				});
 			});
 		});
 	});
