@@ -2,9 +2,10 @@
   "name": "rollbar-api",
   "version": "1.0.0",
   "description": "A node.js wrapper for the Rollbar API",
+  "repository": "https://github.com/cwhenderson20/rollbar-api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "keywords": [
     "rollbar",

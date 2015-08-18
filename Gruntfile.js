@@ -42,6 +42,7 @@ module.exports = function (grunt) {
 		}
 	});
 
+	grunt.registerTask("test", ["simplemocha"]);
 	grunt.registerTask("docs", ["jsdoc"]);
 	grunt.registerTask("lint", ["jshint"]);
 	grunt.registerTask("work", ["watch"]);
