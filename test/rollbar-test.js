@@ -108,7 +108,7 @@ describe("Rollbar API", function () {
 				});
 			});
 
-			it("adds a team to a project", function () {
+			it("adds a project to a team", function () {
 				nock(BASE_URL)
 					.put("/team/1234/project/1234")
 					.query({
@@ -122,7 +122,7 @@ describe("Rollbar API", function () {
 						}
 					});
 
-				api.addTeamToProject(1234, 1234, function (err, res) {
+				api.addProjectToTeam(1234, 1234, function (err, res) {
 					assert.isNull(err);
 					assert.strictEqual(res.statusCode, 200);
 					assert.deepEqual(res.body, {
