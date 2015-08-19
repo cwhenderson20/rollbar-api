@@ -16,18 +16,6 @@ describe("HttpRequest", function () {
 		}, function (err, res) {
 			assert.strictEqual(err.message, "Request timed out.");
 		});
-
-		nock("https://fake.api.host")
-			.get("/path/to/end")
-			.delayConnection(3000)
-			.reply(200, "string");
-
-		HttpRequest._makeRequest(request.get, {
-			uri: "https://fake.api.host/path/to/end",
-			timeout: 2000
-		}, function (err, res) {
-			assert.strictEqual(err.message, "Request timed out.");
-		});
 	});
 
 	it("handles malformed JSON responses in errors", function () {
@@ -42,33 +30,28 @@ describe("HttpRequest", function () {
 		});
 	});
 
-	it("handles request error objects", function () {
-		nock("https://fake.api.host")
-			.get("/path")
-			.replyWithError({
-				message: "Fake error",
-				code: "EFAKEERROR"
-			});
-
-		HttpRequest._makeRequest(request.get, {
-			uri: "https://fake.api.host/path"
-		}, function (err, res) {
-			assert.isUndefined(res);
-			assert.strictEqual(err.message, "Fake error");
-			assert.strictEqual(err.code, "EFAKEERROR");
-		});
-	});
-
 	it("handles unspecified request errors", function () {
 		nock("https://fake.api.host")
 			.get("/path")
-			.replyWithError("Bad things happened here.");
+			.replyWithError("Something bad happened.");
 
 		HttpRequest._makeRequest(request.get, {
 			uri: "https://fake.api.host/path"
 		}, function (err, res) {
-			assert.strictEqual(err.message, "Bad things happened here.");
+			assert.strictEqual(err.message, "Request error.");
 			assert.isUndefined(res);
+		});
+	});
+
+	it("handles invalid json in successful responses", function () {
+		nock("https://fake.api.host")
+			.get("/path")
+			.reply(200, "{err:0 message: {key: \"value\"}}");
+
+		HttpRequest._makeRequest(request.get, {
+			uri: "https://fake.api.host/path"
+		}, function (err, res) {
+			assert.strictEqual(err.message, "Invalid JSON response from server.");
 		});
 	});
 });

@@ -181,6 +181,12 @@ describe("Rollbar", function () {
 					});
 				});
 			});
+
+			it("requires the options be in object form", function () {
+				assert.throws(function () {
+					api.inviteUserToTeam(1234, "example@fake.com");
+				});
+			});
 		});
 
 		describe("Project functions", function () {
@@ -254,6 +260,14 @@ describe("Rollbar", function () {
 					assert.isNull(err);
 					assert.strictEqual(res.statusCode, 200);
 					assert.deepEqual(res.body, EXAMPLE_PROJ);
+				});
+			});
+
+			it("requires the project name to be a string", function () {
+				assert.throws(function () {
+					api.createProject({
+						"Sample-Project": "Title"
+					});
 				});
 			});
 
@@ -410,6 +424,12 @@ describe("Rollbar", function () {
 					assert.isNull(err);
 					assert.strictEqual(res.statusCode, 200);
 					assert.deepEqual(res.body, REPLY);
+				});
+			});
+
+			it("requires the team options parameter to be an object", function () {
+				assert.throws(function () {
+					api.createTeam("String");
 				});
 			});
 
