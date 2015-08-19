@@ -220,8 +220,6 @@ describe("Rollbar", function () {
 				});
 			});
 
-			// ==> Handles errors when project doesn't exist
-
 			it("deletes a project", function () {
 				nock(BASE_URL)
 					.delete("/project/1234")
@@ -238,21 +236,6 @@ describe("Rollbar", function () {
 					assert.isUndefined(res.body);
 				});
 			});
-
-			// Doesn't work right now... looking into why
-			// it("responds with an error when the project to delete does not exist", function () {
-			// 	nock(BASE_URL)
-			// 		.delete("/project/1234")
-			// 		.query("abc123")
-			// 		.reply(422, {
-			// 			err: 1,
-			// 			message: "Invalid project"
-			// 		});
-
-			// 	api.deleteProject(1234, function (err, res) {
-			// 		assert.isNotNull(err);
-			// 	});
-			// });
 
 			it("creates a project", function () {
 				nock(BASE_URL)
