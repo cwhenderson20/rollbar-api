@@ -4,8 +4,7 @@ node_js:
 - '0.12'
 - '0.10'
 - iojs
-after_success:
-  - npm run coveralls
+after_success: npm run coveralls --verbose
 deploy:
   provider: npm
   email: "cwhenderson20@gmail.com"
