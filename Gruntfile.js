@@ -36,8 +36,17 @@ module.exports = function (grunt) {
 			dist: {
 				src: ["lib"],
 				options: {
-					destination: "docs"
+					destination: "jsdocs"
 				}
+			}
+		},
+		jsdoc2md: {
+			all: {
+				src: "lib/*.js",
+				dest: "docs/api.md"
+			}, 
+			options: {
+				"example-lang": "js"
 			}
 		}
 	});
@@ -46,5 +55,5 @@ module.exports = function (grunt) {
 	grunt.registerTask("docs", ["jsdoc"]);
 	grunt.registerTask("lint", ["jshint"]);
 	grunt.registerTask("work", ["watch"]);
-	grunt.registerTask("default", ["lint", "simplemocha", "docs"]);
+	grunt.registerTask("default", ["lint", "simplemocha", "jsdoc2md"]);
 };

@@ -4,4 +4,4 @@
 .jshintrc
 npm-debug.log
 node_modules
-docs
+jsdocs

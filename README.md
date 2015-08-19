@@ -131,7 +131,14 @@ If the http request was successful and the Rollbar API processes the request, a 
 where `headers` are from an [http.incomingMessage](http://nodejs.org/api/http.html#http_http_incomingmessage) instance.
 
 ## Methods
-_coming soon..._
+View documentation [here](https://github.com/cwhenderson20/rollbar-api/tree/master/docs).
+
+## Debugging
+You can start your application with a debug environment variable to view the raw http requests (being sent through the awesome [request](https://github.com/request/request) package) like this:
+
+```bash
+NODE_DEBUG=request node app.js
+```
 
 ## Tests
 You can run unit tests with `mocha`.
