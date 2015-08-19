@@ -6,7 +6,7 @@ node_js:
 - iojs
 after_success: 
   - |-
-    sed -i "" 's/level : getLogLevel()/level: \"debug\"/' ./node_modules/coveralls/lib/logger.js
+    sed -i 's/level : getLogLevel()/level: \"debug\"/' ./node_modules/coveralls/lib/logger.js
   - npm run coveralls --verbose
 deploy:
   provider: npm
