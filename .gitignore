@@ -1,3 +1,4 @@
+.coveralls.yml
 .jscsrc
 .jshintrc
 npm-debug.log
