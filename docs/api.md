@@ -1,123 +1,123 @@
 ## Functions
 <dl>
-<dt><a href="#inviteUserToTeam">inviteUserToTeam(teamId, options, callback)</a></dt>
+<dt><a href="#inviteUserToTeam">`inviteUserToTeam(teamId, options, callback)`</a></dt>
 <dd><p>Invite a user to a team.</p>
 </dd>
-<dt><a href="#getInvite">getInvite(inviteId, callback)</a></dt>
+<dt><a href="#getInvite">`getInvite(inviteId, callback)`</a></dt>
 <dd><p>Get information about an invite</p>
 </dd>
-<dt><a href="#listInvites">listInvites(teamId, callback)</a></dt>
+<dt><a href="#listInvites">`listInvites(teamId, callback)`</a></dt>
 <dd><p>List invites for a team</p>
 </dd>
-<dt><a href="#cancelInvite">cancelInvite(inviteId, callback)</a></dt>
+<dt><a href="#cancelInvite">`cancelInvite(inviteId, callback)`</a></dt>
 <dd><p>Cancel an invite</p>
 </dd>
-<dt><a href="#getItemById">getItemById()</a></dt>
+<dt><a href="#getItemById">`getItemById()`</a></dt>
 <dd><p>Get an item by its ID</p>
 </dd>
-<dt><a href="#getItemByCounter">getItemByCounter()</a></dt>
+<dt><a href="#getItemByCounter">`getItemByCounter()`</a></dt>
 <dd><p>Get an item by its counter</p>
 </dd>
-<dt><a href="#listItems">listItems()</a></dt>
+<dt><a href="#listItems">`listItems()`</a></dt>
 <dd><p>List all items</p>
 </dd>
-<dt><a href="#modifyItem">modifyItem()</a></dt>
+<dt><a href="#modifyItem">`modifyItem()`</a></dt>
 <dd><p>Modify a specific item</p>
 </dd>
-<dt><a href="#createItem">createItem()</a></dt>
+<dt><a href="#createItem">`createItem()`</a></dt>
 <dd><p>Create an item</p>
 </dd>
-<dt><a href="#getOccurrenceById">getOccurrenceById()</a></dt>
+<dt><a href="#getOccurrenceById">`getOccurrenceById()`</a></dt>
 <dd><p>Get an occurrence by its ID</p>
 </dd>
-<dt><a href="#listOccurrences">listOccurrences()</a></dt>
+<dt><a href="#listOccurrences">`listOccurrences()`</a></dt>
 <dd><p>List all occurrences</p>
 </dd>
-<dt><a href="#listOccurrencesOfItem">listOccurrencesOfItem()</a></dt>
+<dt><a href="#listOccurrencesOfItem">`listOccurrencesOfItem()`</a></dt>
 <dd><p>List all occurrences of a specific item</p>
 </dd>
-<dt><a href="#deleteOccurrence">deleteOccurrence()</a></dt>
+<dt><a href="#deleteOccurrence">`deleteOccurrence()`</a></dt>
 <dd><p>Permanently delete an occurrence</p>
 </dd>
-<dt><a href="#listProjects">listProjects(callback)</a></dt>
+<dt><a href="#listProjects">`listProjects(callback)`</a></dt>
 <dd><p>List projects in the account</p>
 </dd>
-<dt><a href="#getProject">getProject(projectId, callback)</a></dt>
+<dt><a href="#getProject">`getProject(projectId, callback)`</a></dt>
 <dd><p>Gets information about the specified project.</p>
 </dd>
-<dt><a href="#deleteProject">deleteProject(projectId, callback)</a></dt>
+<dt><a href="#deleteProject">`deleteProject(projectId, callback)`</a></dt>
 <dd><p>Deletes the specified project.</p>
 </dd>
-<dt><a href="#createProject">createProject(projectName, callback)</a></dt>
+<dt><a href="#createProject">`createProject(projectName, callback)`</a></dt>
 <dd><p>Creates a new project in the authenticated account.</p>
 </dd>
-<dt><a href="#listProjectAccessTokens">listProjectAccessTokens(projectId, callback)</a></dt>
+<dt><a href="#listProjectAccessTokens">`listProjectAccessTokens(projectId, callback)`</a></dt>
 <dd><p>List all access tokens for the specified project.</p>
 </dd>
-<dt><a href="#updateAccessTokenRateLimit">updateAccessTokenRateLimit(projectId, accessToken, [options], callback)</a></dt>
+<dt><a href="#updateAccessTokenRateLimit">`updateAccessTokenRateLimit(projectId, accessToken, [options], callback)`</a></dt>
 <dd><p>Updates a project access token&#39;s rate limit settings</p>
 </dd>
-<dt><a href="#topRecentActiveItems">topRecentActiveItems()</a></dt>
+<dt><a href="#topRecentActiveItems">`topRecentActiveItems()`</a></dt>
 <dd><p>Analogous to the &#39;Top 10 items in last 24 hours&#39; report on the Dashboard.
 Returns the top 10 active items in the specified environments (default &#39;any environment&#39;), ordered descending by level (critical first) and then descending by the count within the specied time period (default &#39;last 24 hours&#39;).</p>
 <p>The return value includes both the items and an array of the counts for each hour. The counts array has the oldest counts first.</p>
 </dd>
-<dt><a href="#occurrenceCounts">occurrenceCounts()</a></dt>
+<dt><a href="#occurrenceCounts">`occurrenceCounts()`</a></dt>
 <dd><p>Analogous to &#39;Hourly Error/Critical Occurrences&#39; and &#39;Daily Error/Critical Occurrences&#39; on the Dashboard.
 Returns an array of recent counts as [timestamp, count] pairs, where each count is the number of matching occurrences in the time range [timestamp, timestamp + bucket_size - 1].</p>
 </dd>
-<dt><a href="#activatedCounts">activatedCounts()</a></dt>
+<dt><a href="#activatedCounts">`activatedCounts()`</a></dt>
 <dd><p>Analogous to &#39;Daily New/Reactivated Items&#39; graph on the Dashboard.
 Returns an array of recent counts as [timestamp, count] pairs, where each count is the number of items that were first seen or reactivated in the time range [timestamp, timestamp + bucket_size - 1].</p>
 </dd>
-<dt><a href="#getTeam">getTeam(teamId, callback)</a></dt>
+<dt><a href="#getTeam">`getTeam(teamId, callback)`</a></dt>
 <dd><p>Get info about a team</p>
 </dd>
-<dt><a href="#listTeams">listTeams([options], callback)</a></dt>
+<dt><a href="#listTeams">`listTeams([options], callback)`</a></dt>
 <dd><p>List teams for the authenticated account</p>
 </dd>
-<dt><a href="#createTeam">createTeam(options, callback)</a></dt>
+<dt><a href="#createTeam">`createTeam(options, callback)`</a></dt>
 <dd><p>Create a new Rollbar team</p>
 </dd>
-<dt><a href="#deleteTeam">deleteTeam(teamId, callback)</a></dt>
+<dt><a href="#deleteTeam">`deleteTeam(teamId, callback)`</a></dt>
 <dd><p>Delete a specified team</p>
 </dd>
-<dt><a href="#isProjectInTeam">isProjectInTeam()</a></dt>
+<dt><a href="#isProjectInTeam">`isProjectInTeam()`</a></dt>
 <dd><p>Check if a project is in a team</p>
 </dd>
-<dt><a href="#addProjectToTeam">addProjectToTeam(teamId, projectId, callback)</a></dt>
+<dt><a href="#addProjectToTeam">`addProjectToTeam(teamId, projectId, callback)`</a></dt>
 <dd><p>Adds a specified project to a specified team</p>
 </dd>
-<dt><a href="#removeProjectFromTeam">removeProjectFromTeam(teamId, projectId, callback)</a></dt>
+<dt><a href="#removeProjectFromTeam">`removeProjectFromTeam(teamId, projectId, callback)`</a></dt>
 <dd><p>Remove a project from a team</p>
 </dd>
-<dt><a href="#checkTeamMembership">checkTeamMembership(teamId, userId, callback)</a></dt>
+<dt><a href="#checkTeamMembership">`checkTeamMembership(teamId, userId, callback)`</a></dt>
 <dd><p>Check team membership</p>
 </dd>
-<dt><a href="#listTeamMembers">listTeamMembers(teamId, [options], callback)</a></dt>
+<dt><a href="#listTeamMembers">`listTeamMembers(teamId, [options], callback)`</a></dt>
 <dd><p>List team members</p>
 </dd>
-<dt><a href="#removeUserFromTeam">removeUserFromTeam(teamId, userId, callback)</a></dt>
+<dt><a href="#removeUserFromTeam">`removeUserFromTeam(teamId, userId, callback)`</a></dt>
 <dd><p>Remove a user from a team</p>
 </dd>
-<dt><a href="#getUser">getUser(userId, callback)</a></dt>
+<dt><a href="#getUser">`getUser(userId, callback)`</a></dt>
 <dd><p>Return basic information about the user</p>
 </dd>
 </dl>
 ## Typedefs
 <dl>
-<dt><a href="#requestCallback">requestCallback</a> : <code>function</code></dt>
+<dt><a href="#requestCallback">`requestCallback`</a> : <code>function</code></dt>
 <dd><p>A function to be called after request completion</p>
 </dd>
-<dt><a href="#responseObject">responseObject</a></dt>
+<dt><a href="#responseObject">`responseObject`</a></dt>
 <dd><p>A response object for successful API calls</p>
 </dd>
-<dt><a href="#RollbarAPIError">RollbarAPIError</a></dt>
+<dt><a href="#RollbarAPIError">`RollbarAPIError`</a></dt>
 <dd><p>A Rollbar API error</p>
 </dd>
 </dl>
 <a name="inviteUserToTeam"></a>
-## inviteUserToTeam(teamId, options, callback)
+## `inviteUserToTeam(teamId, options, callback)`
 Invite a user to a team.
 
 **Kind**: global function  
@@ -131,7 +131,7 @@ Invite a user to a team.
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="getInvite"></a>
-## getInvite(inviteId, callback)
+## `getInvite(inviteId, callback)`
 Get information about an invite
 
 **Kind**: global function  
@@ -143,7 +143,7 @@ Get information about an invite
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="listInvites"></a>
-## listInvites(teamId, callback)
+## `listInvites(teamId, callback)`
 List invites for a team
 
 **Kind**: global function  
@@ -155,7 +155,7 @@ List invites for a team
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="cancelInvite"></a>
-## cancelInvite(inviteId, callback)
+## `cancelInvite(inviteId, callback)`
 Cancel an invite
 
 **Kind**: global function  
@@ -167,61 +167,61 @@ Cancel an invite
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="getItemById"></a>
-## getItemById()
+## `getItemById()`
 Get an item by its ID
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/items/#get-an-item-by-id  
 <a name="getItemByCounter"></a>
-## getItemByCounter()
+## `getItemByCounter()`
 Get an item by its counter
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/items/#get-an-item-by-counter  
 <a name="listItems"></a>
-## listItems()
+## `listItems()`
 List all items
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/items/#list-all-items  
 <a name="modifyItem"></a>
-## modifyItem()
+## `modifyItem()`
 Modify a specific item
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/items/#modify-an-item  
 <a name="createItem"></a>
-## createItem()
+## `createItem()`
 Create an item
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/items_post/  
 <a name="getOccurrenceById"></a>
-## getOccurrenceById()
+## `getOccurrenceById()`
 Get an occurrence by its ID
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/occurrences/#get-an-occurrence-by-id  
 <a name="listOccurrences"></a>
-## listOccurrences()
+## `listOccurrences()`
 List all occurrences
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/occurrences/#list-all-occurrences  
 <a name="listOccurrencesOfItem"></a>
-## listOccurrencesOfItem()
+## `listOccurrencesOfItem()`
 List all occurrences of a specific item
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/occurrences/#list-all-occurrences-of-an-item  
 <a name="deleteOccurrence"></a>
-## deleteOccurrence()
+## `deleteOccurrence()`
 Permanently delete an occurrence
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/occurrences/#delete-an-occurrence  
 <a name="listProjects"></a>
-## listProjects(callback)
+## `listProjects(callback)`
 List projects in the account
 
 **Kind**: global function  
@@ -236,7 +236,7 @@ List projects in the account
 listProjects(function (err, res) {...});
 ```
 <a name="getProject"></a>
-## getProject(projectId, callback)
+## `getProject(projectId, callback)`
 Gets information about the specified project.
 
 **Kind**: global function  
@@ -248,7 +248,7 @@ Gets information about the specified project.
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="deleteProject"></a>
-## deleteProject(projectId, callback)
+## `deleteProject(projectId, callback)`
 Deletes the specified project.
 
 **Kind**: global function  
@@ -260,7 +260,7 @@ Deletes the specified project.
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="createProject"></a>
-## createProject(projectName, callback)
+## `createProject(projectName, callback)`
 Creates a new project in the authenticated account.
 
 **Kind**: global function  
@@ -272,7 +272,7 @@ Creates a new project in the authenticated account.
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="listProjectAccessTokens"></a>
-## listProjectAccessTokens(projectId, callback)
+## `listProjectAccessTokens(projectId, callback)`
 List all access tokens for the specified project.
 
 **Kind**: global function  
@@ -284,7 +284,7 @@ List all access tokens for the specified project.
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="updateAccessTokenRateLimit"></a>
-## updateAccessTokenRateLimit(projectId, accessToken, [options], callback)
+## `updateAccessTokenRateLimit(projectId, accessToken, [options], callback)`
 Updates a project access token's rate limit settings
 
 **Kind**: global function  
@@ -300,7 +300,7 @@ Updates a project access token's rate limit settings
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="topRecentActiveItems"></a>
-## topRecentActiveItems()
+## `topRecentActiveItems()`
 Analogous to the 'Top 10 items in last 24 hours' report on the Dashboard.
 Returns the top 10 active items in the specified environments (default 'any environment'), ordered descending by level (critical first) and then descending by the count within the specied time period (default 'last 24 hours').
 
@@ -309,21 +309,21 @@ The return value includes both the items and an array of the counts for each hou
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/reports/#top-recent-active-items  
 <a name="occurrenceCounts"></a>
-## occurrenceCounts()
+## `occurrenceCounts()`
 Analogous to 'Hourly Error/Critical Occurrences' and 'Daily Error/Critical Occurrences' on the Dashboard.
 Returns an array of recent counts as [timestamp, count] pairs, where each count is the number of matching occurrences in the time range [timestamp, timestamp + bucket_size - 1].
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/reports/#occurrence-counts  
 <a name="activatedCounts"></a>
-## activatedCounts()
+## `activatedCounts()`
 Analogous to 'Daily New/Reactivated Items' graph on the Dashboard.
 Returns an array of recent counts as [timestamp, count] pairs, where each count is the number of items that were first seen or reactivated in the time range [timestamp, timestamp + bucket_size - 1].
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/reports/#activated-counts  
 <a name="getTeam"></a>
-## getTeam(teamId, callback)
+## `getTeam(teamId, callback)`
 Get info about a team
 
 **Kind**: global function  
@@ -335,7 +335,7 @@ Get info about a team
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="listTeams"></a>
-## listTeams([options], callback)
+## `listTeams([options], callback)`
 List teams for the authenticated account
 
 **Kind**: global function  
@@ -348,7 +348,7 @@ List teams for the authenticated account
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="createTeam"></a>
-## createTeam(options, callback)
+## `createTeam(options, callback)`
 Create a new Rollbar team
 
 **Kind**: global function  
@@ -362,7 +362,7 @@ Create a new Rollbar team
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="deleteTeam"></a>
-## deleteTeam(teamId, callback)
+## `deleteTeam(teamId, callback)`
 Delete a specified team
 
 **Kind**: global function  
@@ -374,13 +374,13 @@ Delete a specified team
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="isProjectInTeam"></a>
-## isProjectInTeam()
+## `isProjectInTeam()`
 Check if a project is in a team
 
 **Kind**: global function  
 **See**: https://rollbar.com/docs/api/teams/#check-if-a-project-is-in-a-team  
 <a name="addProjectToTeam"></a>
-## addProjectToTeam(teamId, projectId, callback)
+## `addProjectToTeam(teamId, projectId, callback)`
 Adds a specified project to a specified team
 
 **Kind**: global function  
@@ -393,7 +393,7 @@ Adds a specified project to a specified team
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="removeProjectFromTeam"></a>
-## removeProjectFromTeam(teamId, projectId, callback)
+## `removeProjectFromTeam(teamId, projectId, callback)`
 Remove a project from a team
 
 **Kind**: global function  
@@ -406,7 +406,7 @@ Remove a project from a team
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="checkTeamMembership"></a>
-## checkTeamMembership(teamId, userId, callback)
+## `checkTeamMembership(teamId, userId, callback)`
 Check team membership
 
 **Kind**: global function  
@@ -419,7 +419,7 @@ Check team membership
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="listTeamMembers"></a>
-## listTeamMembers(teamId, [options], callback)
+## `listTeamMembers(teamId, [options], callback)`
 List team members
 
 **Kind**: global function  
@@ -433,7 +433,7 @@ List team members
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="removeUserFromTeam"></a>
-## removeUserFromTeam(teamId, userId, callback)
+## `removeUserFromTeam(teamId, userId, callback)`
 Remove a user from a team
 
 **Kind**: global function  
@@ -446,7 +446,7 @@ Remove a user from a team
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="getUser"></a>
-## getUser(userId, callback)
+## `getUser(userId, callback)`
 Return basic information about the user
 
 **Kind**: global function  
@@ -458,7 +458,7 @@ Return basic information about the user
 | callback | <code>[requestCallback](#requestCallback)</code> |  |
 
 <a name="requestCallback"></a>
-## requestCallback : <code>function</code>
+## `requestCallback` : <code>function</code>
 A function to be called after request completion
 
 **Kind**: global typedef  
@@ -469,7 +469,7 @@ A function to be called after request completion
 | response | <code>[responseObject](#responseObject)</code> | Contains response information if the request was complete and successful. |
 
 <a name="responseObject"></a>
-## responseObject
+## `responseObject`
 A response object for successful API calls
 
 **Kind**: global typedef  
@@ -482,7 +482,7 @@ A response object for successful API calls
 | body | <code>Object</code> &#124; <code>Array</code> | The response body of the request |
 
 <a name="RollbarAPIError"></a>
-## RollbarAPIError
+## `RollbarAPIError`
 A Rollbar API error
 
 **Kind**: global typedef  

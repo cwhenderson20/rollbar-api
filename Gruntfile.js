@@ -46,14 +46,15 @@ module.exports = function (grunt) {
 				dest: "docs/api.md"
 			}, 
 			options: {
-				"example-lang": "js"
+				"example-lang": "js",
+				"name-format": "code"
 			}
 		}
 	});
 
 	grunt.registerTask("test", ["simplemocha"]);
-	grunt.registerTask("docs", ["jsdoc"]);
+	grunt.registerTask("docs", ["jsdoc2md"]);
 	grunt.registerTask("lint", ["jshint"]);
 	grunt.registerTask("work", ["watch"]);
-	grunt.registerTask("default", ["lint", "simplemocha", "jsdoc2md"]);
+	grunt.registerTask("default", ["lint", "simplemocha", "docs"]);
 };
