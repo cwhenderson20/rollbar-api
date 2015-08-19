@@ -1,4 +1,5 @@
 .coveralls.yml
+.jsbeautifyrc
 .jscsrc
 .jshintrc
 npm-debug.log
