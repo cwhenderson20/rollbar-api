@@ -1,45 +1,45 @@
 {
-	"name": "rollbar-api",
-	"version": "1.0.2",
-	"description": "A node.js wrapper for the Rollbar API",
-	"repository": "https://github.com/cwhenderson20/rollbar-api",
-	"main": "index.js",
-	"scripts": {
-		"test": "grunt test",
-		"coveralls": "./node_modules/.bin/mocha --require blanket --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js"
-	},
-	"config": {
-		"blanket": {
-			"pattern": "lib",
-			"data-cover-never": "node_modules"
-		}
-	},
-	"keywords": [
-		"rollbar",
-		"api",
-		"wrapper",
-		"client",
-		"web api"
-	],
-	"author": "Chris Henderson <cwhenderson20@gmail.com>",
-	"license": "MIT",
-	"devDependencies": {
-		"blanket": "^1.1.7",
-		"chai": "~3.2.0",
-		"coveralls": "^2.11.4",
-		"grunt": "~0.4.5",
-		"grunt-contrib-jshint": "~0.11.2",
-		"grunt-contrib-watch": "~0.6.1",
-		"grunt-jsdoc": "~0.6.7",
-		"grunt-simple-mocha": "~0.4.0",
-		"jshint-stylish": "~2.0.1",
-		"load-grunt-tasks": "~3.2.0",
-		"mocha": "~2.2.5",
-		"mocha-lcov-reporter": "0.0.2",
-		"nock": "~2.10.0",
-		"time-grunt": "~1.2.1"
-	},
-	"dependencies": {
-		"request": "~2.60.0"
-	}
+  "name": "rollbar-api",
+  "version": "1.0.3",
+  "description": "A node.js wrapper for the Rollbar API",
+  "repository": "https://github.com/cwhenderson20/rollbar-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test",
+    "coveralls": "./node_modules/.bin/mocha --require blanket --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "lib",
+      "data-cover-never": "node_modules"
+    }
+  },
+  "keywords": [
+    "rollbar",
+    "api",
+    "wrapper",
+    "client",
+    "web api"
+  ],
+  "author": "Chris Henderson <cwhenderson20@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "blanket": "^1.1.7",
+    "chai": "~3.2.0",
+    "coveralls": "^2.11.4",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.11.2",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-jsdoc": "~0.6.7",
+    "grunt-simple-mocha": "~0.4.0",
+    "jshint-stylish": "~2.0.1",
+    "load-grunt-tasks": "~3.2.0",
+    "mocha": "~2.2.5",
+    "mocha-lcov-reporter": "0.0.2",
+    "nock": "~2.10.0",
+    "time-grunt": "~1.2.1"
+  },
+  "dependencies": {
+    "request": "~2.60.0"
+  }
 }
